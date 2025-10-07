@@ -252,7 +252,7 @@ class CyberSuiteGUI(ctk.CTk):
                 self.ip_lookup_results_textbox.insert(ctk.END, f"  Port: {port_data.get('port')}, Transport: {port_data.get('transport')}, Service: {port_data.get('product')}\n")
 
         self.ip_lookup_results_textbox.tag_config("error", foreground="red")
-        self.ip_lookup_results_textbox.tag_config("header", foreground="blue", font=("TkDefaultFont", 10, "bold"))
+        self.ip_lookup_results_textbox.tag_config("header", foreground="blue")
         self.ip_lookup_results_textbox.tag_config("info", foreground="cyan")
 
     def create_port_scanner_frame(self):
@@ -414,7 +414,8 @@ class CyberSuiteGUI(ctk.CTk):
             self.cve_lookup_results_textbox.insert("1.0", f"Error: {results['error']}\n", "error")
             return
 
-        self.cve_lookup_results_textbox.insert(ctk.END, f"CVE lookup complete for {results['product']}{f' version {results['version']}' if results['version'] else ''}.\n\n")
+        version_suffix = f" version {results['version']}" if results['version'] else ""
+        self.cve_lookup_results_textbox.insert(ctk.END, f"CVE lookup complete for {results['product']}{version_suffix}.\n\n")
 
         if results["cves"]:
             self.cve_lookup_results_textbox.insert(ctk.END, "Found CVEs:\n")
@@ -505,7 +506,7 @@ class CyberSuiteGUI(ctk.CTk):
             self.cracker_results_textbox.insert("1.0", f"Password cracked!\nOriginal: {cracked_password}\nHash: {original_hash}\n", "success")
         else:
             self.cracker_results_textbox.insert("1.0", "Password not found in wordlist.\n", "info")
-        self.cracker_results_textbox.tag_config("success", foreground="green", font=("TkDefaultFont", 10, "bold"))
+        self.cracker_results_textbox.tag_config("success", foreground="green")
         self.cracker_results_textbox.tag_config("info", foreground="blue")
 
     def create_log_monitor_frame(self):
@@ -574,7 +575,7 @@ class CyberSuiteGUI(ctk.CTk):
     def _display_log_event(self, event_data):
         self.log_monitor_results_textbox.insert(ctk.END, f"ALERT ({event_data['rule_name']}): {event_data['log_line'].strip()} (Timestamp: {time.ctime(event_data['timestamp'])})\n", "alert")
         self.log_monitor_results_textbox.see(ctk.END) # Scroll to bottom
-        self.log_monitor_results_textbox.tag_config("alert", foreground="red", font=("TkDefaultFont", 10, "bold"))
+        self.log_monitor_results_textbox.tag_config("alert", foreground="red")
 
     def stop_log_monitor_event(self):
         if self.log_monitor_instance and self.log_monitor_running:
@@ -655,7 +656,7 @@ class CyberSuiteGUI(ctk.CTk):
             self.after(0, lambda: messagebox.showerror("Error", f"Could not write report: {e}"))
         except Exception as e:
             self.after(0, lambda: messagebox.showerror("Error", f"An unexpected error occurred during report generation: {e}"))
-        self.report_status_textbox.tag_config("success", foreground="green", font=("TkDefaultFont", 10, "bold"))
+        self.report_status_textbox.tag_config("success", foreground="green")
 
 
 if __name__ == "__main__":
