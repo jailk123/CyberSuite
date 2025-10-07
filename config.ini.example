@@ -1,0 +1,9 @@
+[DEFAULT]
+
+[LOG_MONITOR]
+# Path to the log file you want to monitor
+LOG_FILE_PATH = /var/log/auth.log
+
+# Example rule: alert if the word "Failed" appears
+RULE_1_PATTERN = Failed
+RULE_1_NAME = Failed Login Attempt
